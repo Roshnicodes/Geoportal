@@ -1,0 +1,223 @@
+<% content_for :title, "ASA Geoportal" %>
+
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" referrerpolicy="no-referrer">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" referrerpolicy="no-referrer"></script>
+<% end %>
+
+<div class="app-shell" data-controller="geoportal" data-geoportal-data-base-value="/data/barwani">
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="ASA Geoportal home">
+      <img class="asa-logo" src="/asa-logo.jpg" alt="ASA Action for Social Advancement">
+      <span class="brand-copy">
+        <strong>ASA Geoportal</strong>
+        <small>Spatial Data Infrastructure</small>
+      </span>
+    </a>
+
+    <nav class="nav-tabs" aria-label="Primary navigation">
+      <a href="#home" class="is-active" data-geoportal-target="navLink">Home</a>
+      <a href="#map" data-view="map" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton">Map</a>
+      <a href="#map" data-view="globe" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton">Globe</a>
+      <a href="#data" data-geoportal-target="navLink">Data</a>
+    </nav>
+  </header>
+
+  <main id="home" class="portal-home">
+    <section class="summary-strip" aria-label="Dataset summary">
+      <div class="title-block">
+        <p>Barwani District</p>
+        <h1>ASA Geoportal</h1>
+      </div>
+      <div class="summary-metrics">
+        <div>
+          <strong data-geoportal-target="blocksMetric">7</strong>
+          <span>Blocks</span>
+        </div>
+        <div>
+          <strong data-geoportal-target="villagesMetric">699</strong>
+          <span>Villages</span>
+        </div>
+        <div>
+          <strong data-geoportal-target="interventionMetric">354</strong>
+          <span>Interventions</span>
+        </div>
+        <div>
+          <strong data-geoportal-target="coverageMetric">0</strong>
+          <span>ASA Coverage</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="workspace" aria-label="Barwani map workspace">
+      <aside class="control-panel" aria-label="Map controls">
+        <div class="panel-head">
+          <p>Map Console</p>
+          <h2>Layers & Filters</h2>
+        </div>
+
+        <div class="control-stack">
+          <div class="field">
+            <label class="field-label">Administrative Boundaries</label>
+            <details class="check-menu" data-geoportal-target="adminDropdown">
+              <summary>
+                <span data-geoportal-target="adminSummary">District, Block, Village, ASA Coverage</span>
+                <span class="chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="check-menu-list">
+                <label class="check-row is-disabled">
+                  <input type="checkbox" data-layer="state" data-action="geoportal#adminToggle" disabled>
+                  <span>State</span>
+                  <em>data pending</em>
+                </label>
+                <label class="check-row">
+                  <input type="checkbox" data-layer="district" data-action="geoportal#adminToggle" checked>
+                  <span>District</span>
+                </label>
+                <label class="check-row">
+                  <input type="checkbox" data-layer="block" data-action="geoportal#adminToggle" checked>
+                  <span>Block</span>
+                </label>
+                <label class="check-row is-disabled">
+                  <input type="checkbox" data-layer="gp" data-action="geoportal#adminToggle" disabled>
+                  <span>GP</span>
+                  <em>data pending</em>
+                </label>
+                <label class="check-row">
+                  <input type="checkbox" data-layer="village" data-action="geoportal#adminToggle" checked>
+                  <span>Village</span>
+                </label>
+                <label class="check-row">
+                  <input type="checkbox" data-layer="coverage" data-action="geoportal#adminToggle" checked>
+                  <span>ASA Coverage Village</span>
+                </label>
+              </div>
+            </details>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="projectSelect">Project</label>
+            <select id="projectSelect" data-geoportal-target="projectSelect" data-action="geoportal#filterChanged">
+              <option value="all">All Projects</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="verticalSelect">Vertical</label>
+            <select id="verticalSelect" data-geoportal-target="verticalSelect" data-action="geoportal#filterChanged">
+              <option value="all">All Verticals</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="activitySelect">Interventions</label>
+            <select id="activitySelect" data-geoportal-target="activitySelect" data-action="geoportal#filterChanged">
+              <option value="all">All Interventions</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="blockSelect">Block</label>
+            <select id="blockSelect" data-geoportal-target="blockSelect" data-action="geoportal#blockChanged">
+              <option value="all">All Blocks</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="searchInput">Search</label>
+            <div class="search-field">
+              <span aria-hidden="true"></span>
+              <input id="searchInput" data-geoportal-target="searchInput" data-action="input->geoportal#filterChanged" type="search" placeholder="Village, block, intervention">
+            </div>
+          </div>
+
+          <label class="switch">
+            <input data-geoportal-target="interventionToggle" data-action="geoportal#adminToggle" type="checkbox" checked>
+            <span>Show Interventions</span>
+          </label>
+        </div>
+
+        <div class="stat-grid">
+          <div>
+            <strong data-geoportal-target="visibleCount">0</strong>
+            <span>Visible Interventions</span>
+          </div>
+          <div>
+            <strong data-geoportal-target="activeBlocks">7</strong>
+            <span>Active Blocks</span>
+          </div>
+        </div>
+
+        <div class="info-card legend-card">
+          <p class="card-label">Legend</p>
+          <div data-geoportal-target="legend"></div>
+        </div>
+
+        <div class="info-card details-card" data-geoportal-target="detailsPanel">
+          <p class="card-label">Selected Feature</p>
+          <p class="empty-state">No feature selected</p>
+        </div>
+      </aside>
+
+      <section class="map-panel" aria-label="Interactive map">
+        <div class="map-header">
+          <div class="map-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span data-geoportal-target="mapCaption">Barwani District</span>
+          </div>
+          <div class="view-switch" role="tablist" aria-label="Map view mode">
+            <button type="button" class="is-active" data-view="map" data-geoportal-target="viewButton" data-action="geoportal#switchView" aria-selected="true">Map</button>
+            <button type="button" data-view="globe" data-geoportal-target="viewButton" data-action="geoportal#switchView" aria-selected="false">Globe</button>
+          </div>
+          <div class="map-actions">
+            <button type="button" data-action="geoportal#zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" data-action="geoportal#zoomOut" title="Zoom out" aria-label="Zoom out">-</button>
+            <button type="button" data-action="geoportal#resetView" title="Reset map" aria-label="Reset map">
+              <span class="reset-icon" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="map-holder">
+          <div data-geoportal-target="map" class="leaflet-map"></div>
+          <div data-geoportal-target="globe" class="globe-view is-hidden" aria-label="3D globe view">
+            <canvas data-geoportal-target="globeCanvas" class="globe-canvas"></canvas>
+            <div class="globe-badge">
+              <strong>3D Globe</strong>
+              <span>Barwani spatial overlay</span>
+            </div>
+          </div>
+          <div class="map-status-panel">
+            <strong>Barwani</strong>
+            <span data-geoportal-target="statusText">Loading spatial data</span>
+          </div>
+          <div class="map-loading" data-geoportal-target="loadingPanel">
+            <div class="loader-line"></div>
+            <span>Loading Barwani spatial data</span>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="data" class="data-section" aria-label="Data overview">
+      <div class="data-copy">
+        <p>Data Overview</p>
+        <h2>Spatial Data Infrastructure</h2>
+      </div>
+      <div class="data-grid">
+        <div>
+          <strong>Administrative Boundaries</strong>
+          <span>District, block and village layers for Barwani sample data.</span>
+        </div>
+        <div>
+          <strong>Project</strong>
+          <span>LWRD Interventions from the supplied sample dataset.</span>
+        </div>
+        <div>
+          <strong>Interventions</strong>
+          <span>Dugwell and stop dam records mapped inside village boundaries.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

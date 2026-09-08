@@ -1,0 +1,60 @@
+{
+  "activity_counts": {
+    "Dugwell": 330,
+    "Stop Dam": 24
+  },
+  "bbox": [
+    74.43082632867218,
+    21.36810126066464,
+    75.63093954372502,
+    22.134145508908155
+  ],
+  "counts": {
+    "blocks": 7,
+    "interventions": 354,
+    "poi_source_records": 357,
+    "pois": 354,
+    "villages": 699
+  },
+  "district": "Barwani",
+  "files": {
+    "blocks": "/data/barwani/blocks.geojson",
+    "pois": "/data/barwani/poi_wrd_interventions.geojson",
+    "villages": "/data/barwani/villages.geojson"
+  },
+  "poi_block_counts": {
+    "Pati": 50,
+    "Rajpur": 275,
+    "Sendhwa": 24,
+    "Thikri": 5
+  },
+  "projects": {
+    "LWRD Interventions": 354
+  },
+  "source_files": {
+    "blocks": "/home/asa/Downloads/Barwani_Dist_Blc_BDY.zip",
+    "poi": "/home/asa/Downloads/POI_wrd_Interventions.zip",
+    "villages": "/home/asa/Downloads/Barwani_district_vill_BDY_SSiDP.zip"
+  },
+  "verticals": [
+    {
+      "label": "Water Resources",
+      "name": "WRD",
+      "poi_count": 354
+    },
+    {
+      "label": "Agriculture",
+      "name": "Agriculture",
+      "poi_count": 0
+    }
+  ],
+  "village_block_counts": {
+    "Barwani": 108,
+    "Niwali": 73,
+    "Pansemal": 75,
+    "Pati": 104,
+    "Rajpur": 101,
+    "Sendhwa": 135,
+    "Thikri": 103
+  }
+}
