@@ -7,3 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+barwani_manifest = Rails.root.join("db/geojson/barwani/manifest.json")
+BarwaniDataImporter.new.import! if barwani_manifest.exist?

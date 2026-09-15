@@ -1,0 +1,92 @@
+{
+  "activity_counts": {
+    "Agrohorti Plantation": 107,
+    "Dugwell": 330,
+    "FPO Location": 149,
+    "Stop Dam": 24
+  },
+  "bbox": [
+    74.43082632867218,
+    21.36810126066464,
+    75.63093954372502,
+    22.134145508908155
+  ],
+  "coordinate_reference_system": {
+    "authority": "EPSG:4326",
+    "globe_projection": "WGS84 longitude/latitude to spherical globe coordinates",
+    "name": "WGS 84",
+    "unit": "Degree",
+    "verified_from_prj": true
+  },
+  "counts": {
+    "agribusiness_locations": 149,
+    "blocks": 7,
+    "interventions": 354,
+    "map_items": 610,
+    "plantation_plots": 107,
+    "poi_source_records": 357,
+    "pois": 354,
+    "villages": 699
+  },
+  "district": "Barwani",
+  "files": {
+    "agribusiness": "/api/barwani/agribusiness_locations.geojson",
+    "blocks": "/api/barwani/blocks.geojson",
+    "plantations": "/api/barwani/agrohorti_plantations.geojson",
+    "pois": "/api/barwani/poi_wrd_interventions.geojson",
+    "villages": "/api/barwani/villages.geojson"
+  },
+  "fy_counts": {
+    "2024-25": 85,
+    "2025-26": 89,
+    "2026-27": 82
+  },
+  "poi_block_counts": {
+    "Pati": 163,
+    "Rajpur": 366,
+    "Sendhwa": 76,
+    "Thikri": 5
+  },
+  "projects": {
+    "ABF": 68,
+    "Agribusiness": 149,
+    "Agrohorti": 27,
+    "ITX": 12,
+    "LWRD Interventions": 354
+  },
+  "verticals": [
+    {
+      "item_count": 149,
+      "label": "Agribusiness",
+      "name": "Agribusiness",
+      "poi_count": 149
+    },
+    {
+      "item_count": 107,
+      "label": "Agrohorti Plantation",
+      "name": "Plantation",
+      "poi_count": 107
+    },
+    {
+      "item_count": 354,
+      "label": "Water Resources",
+      "name": "WRD",
+      "poi_count": 354
+    },
+    {
+      "item_count": 0,
+      "label": "Agriculture",
+      "name": "Agriculture",
+      "poi_count": 0
+    }
+  ],
+  "village_block_counts": {
+    "Barwani": 108,
+    "Niwali": 73,
+    "Pansemal": 75,
+    "Pati": 104,
+    "Rajpur": 101,
+    "Sendhwa": 135,
+    "Thikri": 103
+  }
+}

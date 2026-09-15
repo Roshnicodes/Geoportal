@@ -5,7 +5,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" referrerpolicy="no-referrer"></script>
 <% end %>
 
-<div class="app-shell" data-controller="geoportal" data-geoportal-data-base-value="/data/barwani">
+<div class="app-shell" data-controller="geoportal" data-geoportal-data-base-value="/api/barwani" data-geoportal-default-state-value="Madhya Pradesh">
   <header class="topbar">
     <a class="brand" href="#home" aria-label="ASA Geoportal home">
       <img class="asa-logo" src="/asa-logo.jpg" alt="ASA Action for Social Advancement">
@@ -15,18 +15,25 @@
       </span>
     </a>
 
+    <div class="topbar-utility" aria-label="Portal utilities">
+      <span class="utility-label" data-geoportal-target="districtLabel">Barwani, Madhya Pradesh</span>
+      <button type="button" class="language-switch" data-geoportal-target="languageButton" data-action="geoportal#toggleLanguage" aria-pressed="false">
+        <span aria-hidden="true">A</span>
+        <span data-i18n="language">हिंदी</span>
+      </button>
+    </div>
+
     <nav class="nav-tabs" aria-label="Primary navigation">
-      <a href="#home" class="is-active" data-geoportal-target="navLink">Home</a>
-      <a href="#map" data-view="map" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton">Map</a>
-      <a href="#map" data-view="globe" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton">Globe</a>
-      <a href="#data" data-geoportal-target="navLink">Data</a>
+      <a href="#home" data-nav="home" data-action="geoportal#activateHome" data-geoportal-target="navLink" data-i18n="home">Home</a>
+      <a href="#map" class="is-active" data-nav="map" data-view="map" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton" data-i18n="map">Map</a>
+      <a href="#map" data-nav="globe" data-view="globe" data-action="geoportal#switchView" data-geoportal-target="navLink viewButton" data-i18n="globe">Globe</a>
     </nav>
   </header>
 
   <main id="home" class="portal-home">
     <section class="summary-strip" aria-label="Dataset summary">
       <div class="title-block">
-        <p>Barwani District</p>
+        <p data-geoportal-target="districtEyebrow">Barwani District</p>
         <h1>ASA Geoportal</h1>
       </div>
       <div class="summary-metrics">
@@ -40,7 +47,7 @@
         </div>
         <div>
           <strong data-geoportal-target="interventionMetric">354</strong>
-          <span>Interventions</span>
+          <span>Map Items</span>
         </div>
         <div>
           <strong data-geoportal-target="coverageMetric">0</strong>
@@ -49,133 +56,242 @@
       </div>
     </section>
 
-    <section id="map" class="workspace" aria-label="Barwani map workspace">
-      <aside class="control-panel" aria-label="Map controls">
+    <section id="map" class="workspace" data-geoportal-target="workspace" aria-label="Barwani map workspace">
+      <aside class="tool-rail" aria-label="Map tools">
+        <div class="tool-rail-list">
+          <button type="button" class="tool-rail-button is-active" data-tool="layers" data-geoportal-target="toolRailButton" data-action="geoportal#openTool" title="Layers &amp; filters">
+            <span class="tool-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg>
+            </span>
+            <span data-i18n="layers">Layer List</span>
+          </button>
+          <button type="button" class="tool-rail-button" data-tool="lgd" data-geoportal-target="toolRailButton" data-action="geoportal#openTool" title="Find a village by its LGD code">
+            <span class="tool-glyph tool-code" aria-hidden="true">LGD</span>
+            <span data-i18n="lgd">LGD Code</span>
+          </button>
+          <button type="button" class="tool-rail-button" data-tool="buffer" data-geoportal-target="toolRailButton" data-action="geoportal#openTool" title="Buffer: show what falls within a distance of a point">
+            <span class="tool-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span data-i18n="buffer">Buffer</span>
+          </button>
+          <button type="button" class="tool-rail-button" data-tool="compare" data-geoportal-target="toolRailButton" data-action="geoportal#openTool" title="Compare two layers side by side">
+            <span class="tool-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8.5 8 5 12l3.5 4"/><path d="M15.5 8 19 12l-3.5 4"/></svg>
+            </span>
+            <span data-i18n="compare">Compare</span>
+          </button>
+          <button type="button" class="tool-rail-button" data-tool="route" data-geoportal-target="toolRailButton" data-action="geoportal#openTool" title="Route: measure a path between points">
+            <span class="tool-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="5" r="2.2"/><path d="M8.2 19H14a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h5.8"/></svg>
+            </span>
+            <span data-i18n="route">Route</span>
+          </button>
+          <div class="rail-preset-group" aria-label="Quick layer focus">
+            <button type="button" class="tool-rail-button preset-button preset-rail-button" data-preset="all" data-action="geoportal#focusPreset" title="Show all map data">
+              <span class="tool-glyph tool-code" aria-hidden="true">All</span>
+              <span data-i18n="all">All</span>
+            </button>
+            <button type="button" class="tool-rail-button preset-button preset-rail-button" data-preset="plantation" data-action="geoportal#focusPreset" title="Show landscape data">
+              <span class="tool-glyph tool-code" aria-hidden="true">LND</span>
+              <span data-i18n="landscape">Landscape</span>
+            </button>
+            <button type="button" class="tool-rail-button preset-button preset-rail-button" data-preset="fpo" data-action="geoportal#focusPreset" title="Show FPO data">
+              <span class="tool-glyph tool-code" aria-hidden="true">FPO</span>
+              <span data-i18n="fpo">FPO</span>
+            </button>
+            <button type="button" class="tool-rail-button preset-button preset-rail-button" data-preset="fco" data-action="geoportal#focusPreset" title="Show FCO data">
+              <span class="tool-glyph tool-code" aria-hidden="true">FCO</span>
+              <span data-i18n="fco">FCO</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <aside class="control-panel" data-geoportal-target="toolPanel" aria-label="Map controls">
         <div class="panel-head">
-          <p>Map Console</p>
-          <h2>Layers & Filters</h2>
+          <div class="panel-title-copy">
+            <p data-geoportal-target="toolPanelCaption">Map Console</p>
+            <h2 data-geoportal-target="toolPanelTitle">Layer List</h2>
+          </div>
+          <button type="button" class="panel-close-button" data-action="geoportal#collapseMenu" title="Hide menu" aria-label="Hide menu">&times;</button>
         </div>
 
-        <div class="control-stack">
+        <div class="control-stack" data-tool-content="layers">
           <div class="field">
-            <label class="field-label">Administrative Boundaries</label>
             <details class="check-menu" data-geoportal-target="adminDropdown">
               <summary>
-                <span data-geoportal-target="adminSummary">District, Block, Village, ASA Coverage</span>
+                <span class="summary-copy">
+                  <span class="summary-label" data-i18n="adminBoundaries">Administrative Boundaries</span>
+                  <span class="summary-value summary-value-hidden" data-geoportal-target="adminSummary">District</span>
+                </span>
                 <span class="chevron" aria-hidden="true"></span>
               </summary>
-              <div class="check-menu-list">
-                <label class="check-row is-disabled">
-                  <input type="checkbox" data-layer="state" data-action="geoportal#adminToggle" disabled>
-                  <span>State</span>
-                  <em>data pending</em>
-                </label>
-                <label class="check-row">
-                  <input type="checkbox" data-layer="district" data-action="geoportal#adminToggle" checked>
-                  <span>District</span>
-                </label>
-                <label class="check-row">
-                  <input type="checkbox" data-layer="block" data-action="geoportal#adminToggle" checked>
-                  <span>Block</span>
-                </label>
-                <label class="check-row is-disabled">
-                  <input type="checkbox" data-layer="gp" data-action="geoportal#adminToggle" disabled>
-                  <span>GP</span>
-                  <em>data pending</em>
-                </label>
-                <label class="check-row">
-                  <input type="checkbox" data-layer="village" data-action="geoportal#adminToggle" checked>
-                  <span>Village</span>
-                </label>
-                <label class="check-row">
-                  <input type="checkbox" data-layer="coverage" data-action="geoportal#adminToggle" checked>
-                  <span>ASA Coverage Village</span>
-                </label>
+              <div class="check-menu-list boundary-menu-list" data-geoportal-target="adminTree">
+                <p class="empty-state">Loading boundaries</p>
               </div>
             </details>
           </div>
 
-          <div class="field">
-            <label class="field-label" for="projectSelect">Project</label>
-            <select id="projectSelect" data-geoportal-target="projectSelect" data-action="geoportal#filterChanged">
-              <option value="all">All Projects</option>
-            </select>
+          <div class="field filter-field">
+            <details class="check-menu filter-menu">
+              <summary>
+                <span class="summary-copy">
+                  <span class="summary-label" data-i18n="project">Project</span>
+                  <span class="summary-value summary-value-hidden" data-geoportal-target="projectSummary">All Projects</span>
+                </span>
+                <span class="chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="check-menu-list filter-menu-list" data-geoportal-target="projectList"></div>
+            </details>
+          </div>
+
+          <div class="field filter-field">
+            <details class="check-menu filter-menu">
+              <summary>
+                <span class="summary-copy">
+                  <span class="summary-label" data-i18n="fy">FY</span>
+                  <span class="summary-value summary-value-hidden" data-geoportal-target="fySummary">All FY</span>
+                </span>
+                <span class="chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="check-menu-list filter-menu-list" data-geoportal-target="fyList"></div>
+            </details>
+          </div>
+
+          <div class="field filter-field">
+            <details class="check-menu filter-menu">
+              <summary>
+                <span class="summary-copy">
+                  <span class="summary-label" data-i18n="vertical">Vertical</span>
+                  <span class="summary-value summary-value-hidden" data-geoportal-target="verticalSummary">All Verticals</span>
+                </span>
+                <span class="chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="check-menu-list filter-menu-list" data-geoportal-target="verticalList"></div>
+            </details>
+          </div>
+
+          <div class="field filter-field">
+            <details class="check-menu filter-menu">
+              <summary>
+                <span class="summary-copy">
+                  <span class="summary-label" data-i18n="interventions">Interventions</span>
+                  <span class="summary-value summary-value-hidden" data-geoportal-target="activitySummary">All Interventions</span>
+                </span>
+                <span class="chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="check-menu-list filter-menu-list" data-geoportal-target="activityList"></div>
+            </details>
           </div>
 
           <div class="field">
-            <label class="field-label" for="verticalSelect">Vertical</label>
-            <select id="verticalSelect" data-geoportal-target="verticalSelect" data-action="geoportal#filterChanged">
-              <option value="all">All Verticals</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="activitySelect">Interventions</label>
-            <select id="activitySelect" data-geoportal-target="activitySelect" data-action="geoportal#filterChanged">
-              <option value="all">All Interventions</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="blockSelect">Block</label>
-            <select id="blockSelect" data-geoportal-target="blockSelect" data-action="geoportal#blockChanged">
-              <option value="all">All Blocks</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label class="field-label" for="searchInput">Search</label>
             <div class="search-field">
               <span aria-hidden="true"></span>
-              <input id="searchInput" data-geoportal-target="searchInput" data-action="input->geoportal#filterChanged" type="search" placeholder="Village, block, intervention">
+              <input id="searchInput" data-geoportal-target="searchInput" data-action="input->geoportal#filterChanged" type="search" placeholder="Search" data-i18n-placeholder="search">
             </div>
           </div>
 
-          <label class="switch">
-            <input data-geoportal-target="interventionToggle" data-action="geoportal#adminToggle" type="checkbox" checked>
-            <span>Show Interventions</span>
-          </label>
         </div>
 
-        <div class="stat-grid">
-          <div>
-            <strong data-geoportal-target="visibleCount">0</strong>
-            <span>Visible Interventions</span>
+        <div class="panel-actions" data-tool-content="layers">
+          <button type="button" class="panel-reset-button" data-action="geoportal#resetView" data-i18n="reset">Reset</button>
+        </div>
+
+        <form class="tool-workbench is-hidden" data-tool-content="lgd" data-action="submit->geoportal#lookupLgd">
+          <div class="tool-card-heading">
+            <span class="tool-card-icon" aria-hidden="true">LGD</span>
+            <div>
+              <p class="card-label" data-i18n="lgd">LGD Code</p>
+              <h3 data-i18n="lgdLookup">Village Lookup</h3>
+            </div>
           </div>
-          <div>
-            <strong data-geoportal-target="activeBlocks">7</strong>
-            <span>Active Blocks</span>
+          <label class="field-label" for="lgdCode" data-i18n="lgdCode">LGD Code</label>
+          <div class="tool-input-row">
+            <input id="lgdCode" data-geoportal-target="lgdInput" type="search" inputmode="numeric" autocomplete="off" placeholder="Enter LGD code" data-i18n-placeholder="enterLgdCode">
+            <button type="submit" class="tool-primary" title="Find LGD code" aria-label="Find LGD code">&#8981;</button>
           </div>
-        </div>
+          <p class="tool-status" data-geoportal-target="lgdStatus">Ready</p>
+        </form>
 
-        <div class="info-card legend-card">
-          <p class="card-label">Legend</p>
-          <div data-geoportal-target="legend"></div>
-        </div>
+        <section class="tool-workbench is-hidden" data-tool-content="buffer">
+          <div class="tool-card-heading">
+            <span class="tool-card-icon" aria-hidden="true">&#9678;</span>
+            <div>
+              <p class="card-label" data-i18n="bufferTool">Buffer Tool</p>
+              <h3 data-i18n="bufferRadius">Buffer Radius</h3>
+            </div>
+          </div>
+          <label class="field-label" for="bufferDistance" data-i18n="distanceKm">Distance (km)</label>
+          <div class="tool-input-row">
+            <input id="bufferDistance" data-geoportal-target="bufferDistanceInput" type="number" min="0.1" max="50" step="0.1" value="2">
+            <button type="button" class="tool-primary" data-action="geoportal#activateBuffer" title="Set buffer location" aria-label="Set buffer location">&#9678;</button>
+          </div>
+          <div class="tool-command-row">
+            <button type="button" class="tool-secondary" data-action="geoportal#clearBuffer" data-i18n="clear">Clear</button>
+          </div>
+          <p class="tool-status" data-geoportal-target="bufferStatus">Select a map location</p>
+        </section>
 
-        <div class="info-card details-card" data-geoportal-target="detailsPanel">
-          <p class="card-label">Selected Feature</p>
-          <p class="empty-state">No feature selected</p>
-        </div>
+        <section class="tool-workbench is-hidden" data-tool-content="compare">
+          <div class="tool-card-heading">
+            <span class="tool-card-icon" aria-hidden="true">&#8646;</span>
+            <div>
+              <p class="card-label" data-i18n="compareTool">Compare Tool</p>
+              <h3 data-i18n="layerComparison">Layer Comparison</h3>
+            </div>
+          </div>
+          <div class="compare-fields">
+            <label class="field-label" for="comparisonPrimary" data-i18n="primaryLayer">Primary Layer</label>
+            <select id="comparisonPrimary" data-geoportal-target="comparisonPrimary">
+              <option value="fpo" data-i18n="fpoLocation">FPO Location</option>
+              <option value="plantation" data-i18n="landscape">Landscape</option>
+              <option value="water" data-i18n="wrdInterventions">WRD Interventions</option>
+            </select>
+            <label class="field-label" for="comparisonSecondary" data-i18n="comparisonLayer">Comparison Layer</label>
+            <select id="comparisonSecondary" data-geoportal-target="comparisonSecondary">
+              <option value="plantation" data-i18n="landscape">Landscape</option>
+              <option value="fpo" data-i18n="fpoLocation">FPO Location</option>
+              <option value="water" data-i18n="wrdInterventions">WRD Interventions</option>
+            </select>
+          </div>
+          <button type="button" class="tool-primary tool-wide" data-action="geoportal#runComparison" data-i18n="compareLayers">Compare Layers</button>
+          <div class="comparison-result" data-geoportal-target="comparisonResult"></div>
+        </section>
+
+        <section class="tool-workbench is-hidden" data-tool-content="route">
+          <div class="tool-card-heading">
+            <span class="tool-card-icon" aria-hidden="true">&#10140;</span>
+            <div>
+              <p class="card-label" data-i18n="routeAnalysis">Route Analysis</p>
+              <h3 data-i18n="routePoints">Route Points</h3>
+            </div>
+          </div>
+          <div class="route-summary">
+            <strong data-geoportal-target="routeStatus">0 / 8 points</strong>
+            <span data-i18n="routeLimit">Up to 8 points</span>
+          </div>
+          <div class="tool-command-row">
+            <button type="button" class="tool-primary" data-action="geoportal#startRoute" data-i18n="addPoint">Add Point</button>
+            <button type="button" class="tool-secondary" data-action="geoportal#clearRoute" data-i18n="clear">Clear</button>
+          </div>
+          <ol class="route-point-list" data-geoportal-target="routeList"></ol>
+        </section>
+
       </aside>
 
       <section class="map-panel" aria-label="Interactive map">
-        <div class="map-header">
-          <div class="map-title">
-            <span class="live-dot" aria-hidden="true"></span>
-            <span data-geoportal-target="mapCaption">Barwani District</span>
+        <div class="map-print-header" data-geoportal-target="printHeader" aria-hidden="true"></div>
+        <div class="map-search-widget" aria-label="Map search">
+          <div class="map-search-tabs" role="tablist" aria-label="Search mode">
+            <button type="button" class="is-active" data-search-mode="text" data-geoportal-target="searchModeButton" data-action="geoportal#setSearchMode" aria-selected="true" data-i18n="textSearch">Text</button>
+            <button type="button" data-search-mode="lgd" data-geoportal-target="searchModeButton" data-action="geoportal#setSearchMode" aria-selected="false" data-i18n="lgd">LGD Code</button>
+            <button type="button" data-search-mode="location" data-geoportal-target="searchModeButton" data-action="geoportal#setSearchMode" aria-selected="false" data-i18n="locationSearch">Location</button>
           </div>
-          <div class="view-switch" role="tablist" aria-label="Map view mode">
-            <button type="button" class="is-active" data-view="map" data-geoportal-target="viewButton" data-action="geoportal#switchView" aria-selected="true">Map</button>
-            <button type="button" data-view="globe" data-geoportal-target="viewButton" data-action="geoportal#switchView" aria-selected="false">Globe</button>
-          </div>
-          <div class="map-actions">
-            <button type="button" data-action="geoportal#zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
-            <button type="button" data-action="geoportal#zoomOut" title="Zoom out" aria-label="Zoom out">-</button>
-            <button type="button" data-action="geoportal#resetView" title="Reset map" aria-label="Reset map">
-              <span class="reset-icon" aria-hidden="true"></span>
-            </button>
-          </div>
+          <form class="map-search-form" data-action="submit->geoportal#runMapSearch">
+            <input data-geoportal-target="mapSearchInput" type="search" placeholder="Search village, farmer, FPO" aria-label="Search map" data-i18n-placeholder="mapSearchPlaceholder">
+            <button type="submit" title="Search" aria-label="Search">&#8981;</button>
+          </form>
         </div>
 
         <div class="map-holder">
@@ -184,40 +300,64 @@
             <canvas data-geoportal-target="globeCanvas" class="globe-canvas"></canvas>
             <div class="globe-badge">
               <strong>3D Globe</strong>
-              <span>Barwani spatial overlay</span>
             </div>
           </div>
-          <div class="map-status-panel">
-            <strong>Barwani</strong>
-            <span data-geoportal-target="statusText">Loading spatial data</span>
+          <div class="map-tool-rail" aria-label="Map actions">
+            <button type="button" data-action="geoportal#zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" data-action="geoportal#zoomOut" title="Zoom out" aria-label="Zoom out">&#8722;</button>
+            <button type="button" data-action="geoportal#focusDistrict" title="Fit the whole district" aria-label="Fit the whole district">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V5a1 1 0 0 1 1-1h4"/><path d="M20 9V5a1 1 0 0 0-1-1h-4"/><path d="M4 15v4a1 1 0 0 0 1 1h4"/><path d="M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#locateUser" title="Go to my current location" aria-label="Go to my current location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.4"/><path d="M12 2v3.2M12 18.8V22M2 12h3.2M18.8 12H22"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#startCrop" title="Crop / select an area" aria-label="Crop or select an area">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M2 6h14a2 2 0 0 1 2 2v14"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#toggleMeasure" title="Measure distance" aria-label="Measure distance">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.3 2.7 21.3 9.7a1 1 0 0 1 0 1.4l-10.2 10.2a1 1 0 0 1-1.4 0l-7-7a1 1 0 0 1 0-1.4L12.9 2.7a1 1 0 0 1 1.4 0Z"/><path d="m8 8 1.6 1.6M11 5l1.6 1.6M5 11l1.6 1.6"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#toggleFullscreen" title="Full screen" aria-label="Full screen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#downloadVisibleExcel" title="Download visible data as Excel" aria-label="Download visible data as Excel">XLS</button>
+            <button type="button" data-action="geoportal#printMap" title="Print the map" aria-label="Print the map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+            </button>
+            <button type="button" data-geoportal-target="legendButton" data-action="geoportal#toggleLegend" title="Show map legend" aria-label="Show map legend" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button type="button" data-action="geoportal#toggleBaseMapMenu" title="Change base map" aria-label="Change base map">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+            </button>
+          </div>
+          <div class="base-map-menu is-hidden" data-geoportal-target="baseMapMenu" aria-label="Base maps">
+            <div class="base-map-menu-head">
+              <strong data-i18n="baseMaps">Base Maps</strong>
+              <button type="button" data-action="geoportal#toggleBaseMapMenu" title="Close base maps" aria-label="Close base maps">&#215;</button>
+            </div>
+            <div class="base-map-options">
+              <button type="button" class="is-active" data-base-map="clean" data-action="geoportal#setBaseMap" data-i18n="cleanMap">Clean</button>
+              <button type="button" data-base-map="street" data-action="geoportal#setBaseMap" data-i18n="street">Street</button>
+              <button type="button" data-base-map="satellite" data-action="geoportal#setBaseMap" data-i18n="satellite">Satellite</button>
+            </div>
+          </div>
+          <div class="map-coordinate" data-geoportal-target="coordinateStatus">21.640, 74.656</div>
+          <div class="info-card legend-card map-legend is-hidden" data-geoportal-target="legendPanel">
+            <p class="card-label">Legend</p>
+            <div data-geoportal-target="legend"></div>
           </div>
           <div class="map-loading" data-geoportal-target="loadingPanel">
             <div class="loader-line"></div>
-            <span>Loading Barwani spatial data</span>
+            <span data-geoportal-target="loadingDatasetText">Loading Barwani spatial data</span>
+          </div>
+          <div class="info-card details-card map-detail-popover is-empty" data-geoportal-target="detailsPanel">
+            <p class="card-label">Selected Feature</p>
+            <p class="empty-state">No feature selected</p>
           </div>
         </div>
       </section>
     </section>
 
-    <section id="data" class="data-section" aria-label="Data overview">
-      <div class="data-copy">
-        <p>Data Overview</p>
-        <h2>Spatial Data Infrastructure</h2>
-      </div>
-      <div class="data-grid">
-        <div>
-          <strong>Administrative Boundaries</strong>
-          <span>District, block and village layers for Barwani sample data.</span>
-        </div>
-        <div>
-          <strong>Project</strong>
-          <span>LWRD Interventions from the supplied sample dataset.</span>
-        </div>
-        <div>
-          <strong>Interventions</strong>
-          <span>Dugwell and stop dam records mapped inside village boundaries.</span>
-        </div>
-      </div>
-    </section>
   </main>
 </div>
